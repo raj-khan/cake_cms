@@ -85,4 +85,40 @@ class ArticlesController extends AppController
             return $this->redirect(['action' => 'index']);
         }
     }
+
+//    public function tags()
+//    {
+//        // Get passed parameters from the request
+//        $tags = $this->request->getParam('pass');
+//
+//        // Find those articles which is used passes parameters
+//        $articles = $this->Articles->find('tagged', [
+//            'tags' => $tags
+//        ])
+//        ->all();
+//
+//        // Pass variables into the view
+//        $this->set([
+//            'articles' => $articles,
+//            'tags' => $tags
+//        ]);
+//    }
+
+    public function tags(...$tags)
+    {
+        // Get passed parameters from the request
+//        $tags = $this->request->getParam('pass');
+
+        // Find those articles which is used passes parameters
+        $articles = $this->Articles->find('tagged', [
+            'tags' => $tags
+        ])
+        ->all();
+
+        // Pass variables into the view
+        $this->set([
+            'articles' => $articles,
+            'tags' => $tags
+        ]);
+    }
 }
