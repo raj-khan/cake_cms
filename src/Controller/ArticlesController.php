@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controller;
+use Cake\Collection\Collection;
+use PHPUnit\TextUI\XmlConfiguration\LogToReportMigration;
 
 class ArticlesController extends AppController
 {
@@ -22,7 +24,11 @@ class ArticlesController extends AppController
 
     public function view($slug = null)
     {
-        $article = $this->Articles->findBySlug($slug)->firstOrFail();
+        $article = $this->Articles
+                ->findBySlug($slug)
+                ->contain('Tags')
+                ->firstOrFail();
+
         $this->set(compact('article'));
     }
 
@@ -86,29 +92,8 @@ class ArticlesController extends AppController
         }
     }
 
-//    public function tags()
-//    {
-//        // Get passed parameters from the request
-//        $tags = $this->request->getParam('pass');
-//
-//        // Find those articles which is used passes parameters
-//        $articles = $this->Articles->find('tagged', [
-//            'tags' => $tags
-//        ])
-//        ->all();
-//
-//        // Pass variables into the view
-//        $this->set([
-//            'articles' => $articles,
-//            'tags' => $tags
-//        ]);
-//    }
-
     public function tags(...$tags)
     {
-        // Get passed parameters from the request
-//        $tags = $this->request->getParam('pass');
-
         // Find those articles which is used passes parameters
         $articles = $this->Articles->find('tagged', [
             'tags' => $tags
@@ -121,4 +106,9 @@ class ArticlesController extends AppController
             'tags' => $tags
         ]);
     }
+
+    public function test(){
+
+    }
+
 }

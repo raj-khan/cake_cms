@@ -4,6 +4,7 @@
     <tr>
         <th>Title</th>
         <th>Created</th>
+        <th>Tag</th>
         <th>Action</th>
     </tr>
 
@@ -14,9 +15,8 @@
             <td>
                 <?= $this->Html->link($article->title, ['action' => 'view', $article->slug]) ?>
             </td>
-            <td>
-                <?= $article->created->format(DATE_RFC850) ?>
-            </td>
+            <td> <?= $article->created->format(DATE_RFC850) ?> </td>
+            <td> <?= $article->tag_string ?> </td>
             <td>
                 <?= $this->Html->link('Edit', ['action' => 'edit', $article->slug]) ?>
                 <?= $this->Form->postLink(
