@@ -31,7 +31,10 @@ class ArticlesTable extends Table
     public function initialize(array $config): void
     {
         $this->addBehavior('Timestamp');
-        $this->belongsToMany('Tags');
+        $this->belongsToMany('Tags', [
+            'joinTable' => 'articles_tags',
+            'dependent' => true
+        ]);
     }
 
     public function beforeSave(EventInterface $event, $entity, $options)

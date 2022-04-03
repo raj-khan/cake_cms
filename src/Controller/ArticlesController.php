@@ -62,6 +62,7 @@ class ArticlesController extends AppController
     {
         $article = $this->Articles
             ->findBySlug($slug)
+            ->contain('Tags')
             ->firstOrFail();
 
         if ($this->request->is(['post', 'put'])) {
@@ -92,8 +93,10 @@ class ArticlesController extends AppController
         }
     }
 
-    public function tags(...$tags)
+    public function tags()
     {
+
+        $tags = $this->request->getParam('pass');
         // Find those articles which is used passes parameters
         $articles = $this->Articles->find('tagged', [
             'tags' => $tags
