@@ -67,7 +67,7 @@ class ArticlesTable extends Table
 
         // Remove existing tags from the list of new tags
         foreach($tags->extract('title') as $existing){
-            $index = in_array($existing, $newTags);
+            $index = array_search($existing, $newTags);
             if($index !== false){
                 unset($newTags[$index]);
             }
