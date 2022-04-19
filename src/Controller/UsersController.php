@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Mailer\MailerAwareTrait;
+
 /**
  * Users Controller
  *
@@ -11,6 +13,9 @@ namespace App\Controller;
  */
 class UsersController extends AppController
 {
+    
+    use MailerAwareTrait;
+
     /**
      * Index method
      *
@@ -49,7 +54,10 @@ class UsersController extends AppController
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
+           
             if ($this->Users->save($user)) {
+    
+                $this->getMailer('User')->send('welcome', [$user]); // sending welcome email
                 $this->Flash->success(__('The user has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -102,4 +110,6 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+
 }
